@@ -8,10 +8,7 @@ public static void main(String[] args) {
 		if(args[0].equals("a")) {
 			System.out.println("Loading data ...");		
 			try {
-			BufferedReader s = new BufferedReader(
-				new InputStreamReader(
-						new FileInputStream("students.txt"))); 
-			String r = s.readLine(); String i[] = r.split("[, ]+");			
+			String i[] = getString().split("[, ]+");			
 			for(String j : i) { System.out.println(j); }
 			} catch (Exception e){} 
 			System.out.println("Data Loaded.");
@@ -20,11 +17,7 @@ public static void main(String[] args) {
 		{
 			System.out.println("Loading data ...");			
 			try {
-			BufferedReader s = new BufferedReader(
-					new InputStreamReader(
-							new FileInputStream("students.txt"))); 
-			String r = s.readLine(); //System.out.println(r);
-			String i[] = r.split(", ");	
+			String i[] = getString().split(", ");	
 			Random x = new Random();
 				int y = Math.abs(x.nextInt()%i.length);
 					System.out.println(i[y]);
@@ -50,11 +43,7 @@ public static void main(String[] args) {
 		{
 			System.out.println("Loading data ...");			
 			try {
-			BufferedReader s = new BufferedReader(
-					new InputStreamReader(
-							new FileInputStream("students.txt"))); 
-			String r = s.readLine();
-			String i[] = r.split(", ");	
+			String i[] = getString().split(", ");	
 			boolean done = false;
 			String t = args[0].substring(1);
 			for(int idx = 0; idx<i.length && !done; idx++) {
@@ -70,11 +59,7 @@ public static void main(String[] args) {
 		{
 			System.out.println("Loading data ...");			
 			try {
-			BufferedReader s = new BufferedReader(
-					new InputStreamReader(
-							new FileInputStream("students.txt"))); 
-			String D = s.readLine();
-			char a[] = D.toCharArray();			
+			char a[] = getString().toCharArray();			
 			boolean in_word = false;
 			int count=0;
 			for(char c:a) {
@@ -88,5 +73,12 @@ public static void main(String[] args) {
 			} catch (Exception e){} 
 			System.out.println("Data Loaded.");				
 		}
+	}
+
+	private static String getString() throws IOException{
+		BufferedReader s = new BufferedReader(
+			new InputStreamReader(
+				new FileInputStream("students.txt"))); 
+		return bufferedReader.readLine();
 	}
 }
