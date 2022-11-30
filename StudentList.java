@@ -5,80 +5,98 @@ import java.util.*;
 public class StudentList {
 public static void main(String[] args) {
 //		Check arguments
-		if(args[0].equals("a")) {
-			System.out.println("Loading data ...");		
+		if(args[0].equals(Constant.ShowAll)) {
+			System.out.println(Constant.LoadingMessage);		
 			try {
-			String i[] = getString().split("[, ]+");			
-			for(String j : i) { System.out.println(j); }
-			} catch (Exception e){} 
-			System.out.println("Data Loaded.");
+			String[] studentName = getString().split(Constant.StrudentEntryDelimiter);			
+			for(String student : studentName) {
+			    System.out.println(student); 
+			}
+			} catch (Exception e){
+
+			} 
+			System.out.println(Constant.DataLoadedMessage);
 		}
-		else if(args[0].equals("r")) 
+		else if(args[0].equals(Constant.ShowRandom)) 
 		{
-			System.out.println("Loading data ...");			
+			System.out.println(Constant.LoadingMessage);			
 			try {
-			String i[] = getString().split(", ");	
+			String[] studentName = getString().split(", ");	
 			Random x = new Random();
-				int y = Math.abs(x.nextInt()%i.length);
-					System.out.println(i[y]);
-			} catch (Exception e){} 
-			System.out.println("Data Loaded.");			
+				int y = Math.abs(x.nextInt()%studentName.length);
+					System.out.println(studentName[y]);
+			} catch (Exception e){
+
+			} 
+			System.out.println(Constant.DataLoadedMessage);			
 		}
-		else if(args[0].contains("+")){
-			System.out.println("Loading data ...");			
+		else if(args[0].contains(Constant.AddEntry)){
+			System.out.println(Constant.LoadingMessage);			
 			try {
-			BufferedWriter s = new BufferedWriter(
-					new FileWriter("students.txt", true));
-			String t = args[0].substring(1);
-	        Date d = new Date();
-	        String df = "dd/mm/yyyy-hh:mm:ss a";
-	        DateFormat dateFormat = new SimpleDateFormat(df);
-	        String fd= dateFormat.format(d);
-			s.write(" ,"+t+"\nList last updated on "+fd);
-			s.close();
-			} catch (Exception e){}							
-			System.out.println("Data Loaded.");	
+			BufferedWriter bufferedWriter = new BufferedWriter(
+					new FileWriter(Constant.StudentList, true));
+			String newData = args[0].substring(1);
+	        Date date = new Date();
+	        String dateFormatText = Constant.DateFormate;
+	        DateFormat dateFormat = new SimpleDateFormat(dateFormatText);
+	        String dateUpdate= dateFormat.format(date);
+			bufferedWriter.write(" ,"+newData+Constant.LastUpdateMessage+dateUpdate);
+			bufferedWriter.close();
+			} catch (Exception e){
+
+			}							
+			System.out.println(Constant.DataLoadedMessage);	
 		}
-		else if(args[0].contains("?")) 
+		else if(args[0].contains(Constant.FindEntry)) 
 		{
-			System.out.println("Loading data ...");			
+			System.out.println(Constant.LoadingMessage);			
 			try {
-			String i[] = getString().split(", ");	
+			String[] studentNames = getString().split(", ");	
 			boolean done = false;
-			String t = args[0].substring(1);
-			for(int idx = 0; idx<i.length && !done; idx++) {
-				if(i[idx].equals(t)) {
-					System.out.println("We found it!");
+			String studentName = args[0].substring(1);
+			for(int idx = 0; idx<studentNames.length && !done; idx++){
+				if(studentNames[idx].equals(studentName)) {
+					System.out.println(Constant.DataFoundMessage);
 						done=true;
 				}
 			}
-			} catch (Exception e){} 
-			System.out.println("Data Loaded.");				
+			} catch (Exception e){
+
+			} 
+			System.out.println(Constant.DataLoadedMessage);				
 		}
-		else if(args[0].contains("c")) 
+		else if(args[0].contains(Constant.ShowCount)) 
 		{
-			System.out.println("Loading data ...");			
+			System.out.println(Constant.LoadingMessage);			
 			try {
-			char a[] = getString().toCharArray();			
+			char[] studentNamestoCharArray = getString().toCharArray();			
 			boolean in_word = false;
 			int count=0;
-			for(char c:a) {
-				if(c ==' ') 
+			for(char studentNameChar:studentNamestoCharArray) {
+				if(studentNameChar ==' ') 
 				{
 					if (!in_word) {	count++; in_word =true;	}
-					else { in_word=false;}			
+					else{
+					    in_word=false;
+					}			
 				}
 			}
-			System.out.println(count +" word(s) found ");
-			} catch (Exception e){} 
-			System.out.println("Data Loaded.");				
+			System.out.println(count +Constant.WordsFoundMessage);
+			} catch (Exception e){
+
+			} 
+			System.out.println(Constant.DataLoadedMessage);				
 		}
+		else{
+			System.out.println(Constant.WrongInputMessage);
+		}	
 	}
 
 	private static String getString() throws IOException{
-		BufferedReader s = new BufferedReader(
+		BufferedReader bufferedReader = new BufferedReader(
 			new InputStreamReader(
-				new FileInputStream("students.txt"))); 
+				new FileInputStream(Constant.StudentList))); 
 		return bufferedReader.readLine();
 	}
 }
+
